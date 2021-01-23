@@ -1,2 +1,16 @@
-<h1>Palabras#index</h1>
-<p>Find me in app/views/palabras/index.html.erb</p>
+<h1>Total Palabras: <%= @palabras.count %></h1>
+
+ <table>
+  <tr>
+    <th>Content</th>
+    <th>Language</th>
+    <th>Links</th>
+  </tr>
+  <% @palabras.each do |palabra| %>
+  <tr>
+    <td><%= palabra.content %></td>
+    <td>.</td>
+    <td><%= link_to 'Show', '#' %></td>
+  </tr>
+  <% end %>
+</table>
