@@ -13,6 +13,7 @@ gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 4.0'
 end
 
