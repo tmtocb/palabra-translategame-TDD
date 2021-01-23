@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :palabra do
-    content { "MyString" }
+    content { "despacito" }
   end
 end
