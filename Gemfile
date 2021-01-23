@@ -17,7 +17,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'guard'
   gem 'guard-rspec', require: false
