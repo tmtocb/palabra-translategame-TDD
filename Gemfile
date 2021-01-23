@@ -12,10 +12,14 @@ gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
+group :test do
+  gem 'shoulda-matchers', '~> 4.0'
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails', '~> 4.0.2'
   gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 4.0.2'
 end
 
 group :development do
