@@ -31,6 +31,7 @@ group :development do
   gem 'pry-rails'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'strong_migrations'
   gem 'web-console', '>= 3.3.0'
 end
 
