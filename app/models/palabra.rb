@@ -1,0 +1,2 @@
+class Palabra < ApplicationRecord
+end
