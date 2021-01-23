@@ -35,4 +35,20 @@ describe PalabrasController do
       end
     end
   end
+
+  describe 'GET new' do
+    before { get :new }
+
+    it 'assigns @palabra' do
+      expect(assigns(:palabra)).to be_a_new(Palabra)
+    end
+
+    it 'renders the new template' do
+      expect(response).to render_template(:new)
+    end
+
+    it 'expect success http response' do
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
