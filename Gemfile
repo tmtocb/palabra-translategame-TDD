@@ -17,7 +17,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'guard'
   gem 'guard-rspec', require: false
@@ -25,9 +24,14 @@ group :development, :test do
 end
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'bullet'
   gem 'listen', '~> 3.2'
+  gem 'pry-rails'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'strong_migrations'
   gem 'web-console', '>= 3.3.0'
 end
 
