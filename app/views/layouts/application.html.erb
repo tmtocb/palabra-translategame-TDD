@@ -13,7 +13,10 @@
   </head>
 
   <body>
-    <%= yield %>
-    <%= debug(params) if Rails.env.development? %> 
+    <%= render 'layouts/navbar' %>
+    <div class="container">
+      <%= yield %>
+      <%= debug(params) if Rails.env.development? %> 
+    </div>
   </body>
 </html>
