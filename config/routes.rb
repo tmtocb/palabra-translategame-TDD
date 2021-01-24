@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  resources :palabras, only: %i[index new]
+  root 'palabras#index'
+  resources :palabras, only: %i[index new create show]
 end

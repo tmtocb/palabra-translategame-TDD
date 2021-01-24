@@ -51,4 +51,31 @@ describe PalabrasController do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'POST create' do
+    subject { post :create, params: params }
+
+    context 'valid params' do
+
+      let (:params) do
+        { palabra: { content: 'despacito' } }
+      end
+
+      it 'creates new palabra' do
+        expect { subject }.to change(Palabra, :count).from(0).to(1)
+      end
+    end
+
+    context 'invalid params' do
+
+      let (:params) do
+        { palabra: { content: '' } }
+      end
+
+      it 'does not create new word' do
+        expect { subject }.not_to change(Palabra, :count)
+        expect(response).to render_template(:new)
+      end
+    end
+  end
 end
