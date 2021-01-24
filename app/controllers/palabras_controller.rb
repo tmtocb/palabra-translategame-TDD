@@ -24,6 +24,16 @@ class PalabrasController < ApplicationController
   def edit
     @palabra = Palabra.find(params[:id])
   end
+
+  def update
+    @palabra = Palabra.find(params[:id])
+    if @palabra.update(palabra_params)
+      redirect_to(palabra_path(@palabra))
+    else
+      render :edit
+    end
+  end
+
     
   private
 

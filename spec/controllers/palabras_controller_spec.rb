@@ -115,4 +115,37 @@ describe PalabrasController do
       expect(response).to render_template(:edit)
     end
   end
+
+  describe 'PUT update' do
+    subject { put :update, params: params }
+    let!(:palabra) { create(:palabra, content: 'despacito', language: language_1) }
+    let!(:language_1) { create(:language, name: 'English') }
+    let!(:language_2) { create(:language, name: 'Polish') }
+
+    context 'valid params' do
+      let(:params) do 
+      { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+      end
+
+      it 'updates palabra' do
+        expect { subject } 
+        .to change { palabra.reload.content }
+        .from('despacito')
+        .to('bailando')
+        .and change { palabra.reload.language }
+        .from(language_1)
+        .to(language_2)
+      end
+    end
+      
+    context 'invalid params' do
+      let(:params) do 
+      { id: palabra.id, palabra: { content: '' } }
+      end
+
+      it 'does not update palabra' do
+        expect { subject }.not_to change { palabra.reload.content }
+      end
+    end
+  end
 end
