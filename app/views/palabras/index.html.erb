@@ -1,6 +1,6 @@
 <h1>Total Palabras: <%= @palabras.count %></h1>
 
- <table>
+ <table class="table table-dark">
   <tr>
     <th>Content</th>
     <th>Language</th>
@@ -10,7 +10,7 @@
   <tr>
     <td><%= palabra.content %></td>
     <td>.</td>
-    <td><%= link_to 'Show', '#' %></td>
+    <td><%= link_to 'Show', palabra_path(palabra) %></td>
   </tr>
   <% end %>
 </table>
