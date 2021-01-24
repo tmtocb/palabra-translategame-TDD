@@ -53,12 +53,13 @@ describe PalabrasController do
   end
 
   describe 'POST create' do
+    let!(:language) { create(:language) }
     subject { post :create, params: params }
 
     context 'valid params' do
 
       let (:params) do
-        { palabra: { content: 'despacito' } }
+        { palabra: { content: 'despacito', language_id: language.id } }
       end
 
       it 'creates new palabra' do

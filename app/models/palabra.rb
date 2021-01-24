@@ -1,3 +1,4 @@
 class Palabra < ApplicationRecord
-  validates :content, presence: true
+  validates :content, :language, presence: true
+  belongs_to :language
 end
