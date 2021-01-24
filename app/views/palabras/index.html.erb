@@ -6,6 +6,7 @@
     <th>Language</th>
     <th>Show</th>
     <th>Edit</th>
+    <th>Remove</th>
   </tr>
   <% @palabras.each do |palabra| %>
   <tr>
@@ -13,6 +14,8 @@
     <td><%= palabra.language.name %></td>
     <td><%= link_to 'Show', palabra_path(palabra) %></td>
     <td><%= link_to 'Edit', edit_palabra_path(palabra) %></td>
+    <td><%= link_to 'Delete', palabra_path(palabra), method: :delete %></td>
   </tr>
   <% end %>
 </table>
+

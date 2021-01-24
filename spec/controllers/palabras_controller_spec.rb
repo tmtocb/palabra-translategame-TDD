@@ -148,4 +148,19 @@ describe PalabrasController do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    subject { delete :destroy, params: params }
+    let!(:palabra) { create(:palabra) }
+
+    context 'valid params' do
+      let (:params) do
+      { id: palabra.id }
+      end
+
+      it 'deletes palabra' do
+        expect { subject}.to change(Palabra, :count).from(1).to(0)
+      end
+    end
+  end
 end

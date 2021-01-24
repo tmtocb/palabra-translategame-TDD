@@ -34,6 +34,12 @@ class PalabrasController < ApplicationController
     end
   end
 
+  def destroy
+    @palabra = Palabra.find(params[:id])
+    @palabra.destroy
+    redirect_to(palabras_path)
+  end
+
     
   private
 
