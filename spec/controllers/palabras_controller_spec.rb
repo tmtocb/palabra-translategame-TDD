@@ -97,4 +97,22 @@ describe PalabrasController do
       expect(response).to render_template(:show)
     end
   end
+
+  describe 'GET edit' do
+    before { get :edit, params: params }
+
+    let(:params) do
+       { id: palabra.id }
+    end
+
+    let!(:palabra) { create(:palabra) }
+
+    it 'assigns @palabra' do
+      expect(assigns(:palabra)).to eq(palabra)
+    end
+
+    it 'renders the edit template' do
+      expect(response).to render_template(:edit)
+    end
+  end
 end

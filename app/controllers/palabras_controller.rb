@@ -20,6 +20,10 @@ class PalabrasController < ApplicationController
   def show
     @palabra = Palabra.find(params[:id])
   end
+
+  def edit
+    @palabra = Palabra.find(params[:id])
+  end
     
   private
 
