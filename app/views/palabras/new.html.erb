@@ -2,5 +2,6 @@
 
 <%= simple_form_for @palabra do |f| %>
   <%= f.input :content %>
+  <%= f.association :language %>
   <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>

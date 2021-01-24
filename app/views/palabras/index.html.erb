@@ -9,7 +9,7 @@
   <% @palabras.each do |palabra| %>
   <tr>
     <td><%= palabra.content %></td>
-    <td>.</td>
+    <td><%= palabra.language.name %></td>
     <td><%= link_to 'Show', palabra_path(palabra) %></td>
   </tr>
   <% end %>
