@@ -1,4 +1,5 @@
 class PalabrasController < ApplicationController
+  before_action :set_palabra, only: %i[show edit update destroy]
 
   def index
     @palabras = Palabra.all
@@ -18,15 +19,12 @@ class PalabrasController < ApplicationController
   end
 
   def show
-    @palabra = Palabra.find(params[:id])
   end
 
   def edit
-    @palabra = Palabra.find(params[:id])
   end
 
   def update
-    @palabra = Palabra.find(params[:id])
     if @palabra.update(palabra_params)
       redirect_to(palabra_path(@palabra))
     else
@@ -35,7 +33,6 @@ class PalabrasController < ApplicationController
   end
 
   def destroy
-    @palabra = Palabra.find(params[:id])
     @palabra.destroy
     redirect_to(palabras_path)
   end
@@ -45,5 +42,9 @@ class PalabrasController < ApplicationController
 
   def palabra_params
     params.require(:palabra).permit(:content, :language_id)
+  end
+
+  def set_palabra
+    @palabra = Palabra.find(params[:id])
   end
 end
