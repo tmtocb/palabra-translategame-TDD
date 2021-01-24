@@ -11,13 +11,14 @@ class PalabrasController < ApplicationController
   def create
     @palabra = Palabra.new(palabra_params)
     if @palabra.save
-      redirect_to(root_path)
+      redirect_to(palabras_path)
     else
       render :new
     end
   end
 
   def show
+    @palabra = Palabra.find(params[:id])
   end
     
   private

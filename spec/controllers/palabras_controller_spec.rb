@@ -78,4 +78,22 @@ describe PalabrasController do
       end
     end
   end
+
+  describe 'GET show' do
+    before { get :show, params: params }
+
+    let(:params) do
+       { id: palabra.id }
+    end
+
+    let!(:palabra) { create(:palabra) }
+
+    it 'assigns @palabra' do
+      expect(assigns(:palabra)).to eq(palabra)
+    end
+
+    it 'renders the show template' do
+      expect(response).to render_template(:show)
+    end
+  end
 end
