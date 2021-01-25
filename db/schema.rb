@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_215510) do
+ActiveRecord::Schema.define(version: 2021_01_25_121102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 2021_01_24_215510) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "language_id"
+    t.bigint "user_id"
     t.index ["language_id"], name: "index_palabras_on_language_id"
+    t.index ["user_id"], name: "index_palabras_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,4 +44,5 @@ ActiveRecord::Schema.define(version: 2021_01_24_215510) do
   end
 
   add_foreign_key "palabras", "languages"
+  add_foreign_key "palabras", "users"
 end

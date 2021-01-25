@@ -12,6 +12,7 @@ class PalabrasController < ApplicationController
 
   def create
     @palabra = Palabra.new(palabra_params)
+    @palabra.user = current_user
     if @palabra.save
       redirect_to(palabras_path)
     else
