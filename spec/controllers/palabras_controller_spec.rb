@@ -265,13 +265,32 @@ describe PalabrasController do
     subject { delete :destroy, params: params }
     let!(:palabra) { create(:palabra) }
 
-    context 'valid params' do
-      let (:params) do
-      { id: palabra.id }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
       end
 
-      it 'deletes palabra' do
-        expect { subject}.to change(Palabra, :count).from(1).to(0)
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id }
+        end
+
+        it 'deletes palabra' do
+          expect { subject }.to change(Palabra, :count).from(1).to(0)
+        end
+      end
+    end
+
+    context 'when user is NOT signed in' do
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id }
+        end
+
+        it 'does not delete palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+        end
       end
     end
   end
