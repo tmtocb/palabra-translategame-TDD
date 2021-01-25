@@ -14,6 +14,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
 gem 'pundit'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
+gem 'rubocop', '~> 1.8', require: false
 gem 'sass-rails', '>= 6'
 gem 'simple_form'
 gem 'turbolinks', '~> 5'
