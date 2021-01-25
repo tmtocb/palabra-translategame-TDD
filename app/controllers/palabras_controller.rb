@@ -1,6 +1,6 @@
 class PalabrasController < ApplicationController
   before_action :set_palabra, only: %i[show edit update destroy]
-  before_action :authenticate_user!, only: %i[new create]
+  before_action :authenticate_user!, only: %i[new create edit]
 
   def index
     @palabras = Palabra.all

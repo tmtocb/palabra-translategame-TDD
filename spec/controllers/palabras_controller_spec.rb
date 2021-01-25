@@ -16,7 +16,7 @@ describe PalabrasController do
         expect(response).to render_template(:index)
       end
 
-      it 'expect success http response' do
+      it do
         expect(response).to have_http_status(:success)
       end
     end
@@ -30,7 +30,7 @@ describe PalabrasController do
         expect(response).to render_template(:index)
       end
 
-      it 'expect success http response' do
+      it do
         expect(response).to have_http_status(:success)
       end
     end
@@ -52,7 +52,7 @@ describe PalabrasController do
         expect(response).to render_template(:new)
       end
 
-      it 'expect success http response' do
+      it do
         expect(response).to have_http_status(200)
       end
     end
@@ -67,7 +67,7 @@ describe PalabrasController do
         expect(response).not_to render_template(:new)
       end
 
-      it 'expect http response' do
+      it do
         expect(response).to have_http_status(200)
       end
     end
@@ -90,7 +90,7 @@ describe PalabrasController do
           expect { subject }.to change(Palabra, :count).from(0).to(1)
         end
 
-        it 'expect 302 http response' do
+        it do
           subject
           expect(response).to have_http_status(302)
         end
@@ -123,7 +123,7 @@ describe PalabrasController do
           expect { subject }.not_to change(Palabra, :count)
         end
 
-        it 'expect 302 http response' do
+        it do
           subject
           expect(response).to have_http_status(302)
         end
@@ -140,7 +140,7 @@ describe PalabrasController do
           expect(response).not_to render_template(:new)
         end
 
-        it 'expect 302 http response' do
+        it do
           subject
           expect(response).to have_http_status(302)
         end
@@ -150,11 +150,9 @@ describe PalabrasController do
 
   describe 'GET show' do
     before { get :show, params: params }
-
     let(:params) do
        { id: palabra.id }
     end
-
     let!(:palabra) { create(:palabra) }
 
     it 'assigns @palabra' do
@@ -167,20 +165,37 @@ describe PalabrasController do
   end
 
   describe 'GET edit' do
-    before { get :edit, params: params }
-
+    subject { get :edit, params: params }
     let(:params) do
        { id: palabra.id }
     end
-
     let!(:palabra) { create(:palabra) }
 
-    it 'assigns @palabra' do
-      expect(assigns(:palabra)).to eq(palabra)
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
+        subject
+      end
+
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to eq(palabra)
+      end
+
+      it 'renders the edit template' do
+        expect(response).to render_template(:edit)
+      end
     end
 
-    it 'renders the edit template' do
-      expect(response).to render_template(:edit)
+    context 'when user is NOT signed in' do
+      it 'does not assign @palabra' do
+        expect(assigns(:palabra)).to eq(nil)
+      end
+
+      it do
+        subject
+        expect(response).to have_http_status(302)
+      end
     end
   end
 
