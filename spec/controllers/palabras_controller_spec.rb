@@ -102,7 +102,7 @@ describe PalabrasController do
           { palabra: { content: '' } }
         end
 
-        it 'does not create new word' do
+        it 'does not create new palabra' do
           expect { subject }.not_to change(Palabra, :count)
           expect(response).to render_template(:new)
         end
@@ -135,7 +135,7 @@ describe PalabrasController do
           { palabra: { content: '' } }
         end
 
-        it 'does not create new word' do
+        it 'does not create new palabra' do
           expect { subject }.not_to change(Palabra, :count)
           expect(response).not_to render_template(:new)
         end
@@ -205,29 +205,58 @@ describe PalabrasController do
     let!(:language_1) { create(:language, name: 'English') }
     let!(:language_2) { create(:language, name: 'Polish') }
 
-    context 'valid params' do
-      let(:params) do 
-      { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
       end
 
-      it 'updates palabra' do
-        expect { subject } 
-        .to change { palabra.reload.content }
-        .from('despacito')
-        .to('bailando')
-        .and change { palabra.reload.language }
-        .from(language_1)
-        .to(language_2)
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+        end
+
+        it 'updates palabra' do
+          expect { subject }
+            .to change { palabra.reload.content }
+            .from('despacito')
+            .to('bailando')
+            .and change { palabra.reload.language }
+            .from(language_1)
+            .to(language_2)
+        end
+      end
+
+      context 'invalid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: '' } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
     end
       
-    context 'invalid params' do
-      let(:params) do 
-      { id: palabra.id, palabra: { content: '' } }
+    context 'when user is NOT signed in' do
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
 
-      it 'does not update palabra' do
-        expect { subject }.not_to change { palabra.reload.content }
+      context 'invalid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: '' } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
     end
   end
