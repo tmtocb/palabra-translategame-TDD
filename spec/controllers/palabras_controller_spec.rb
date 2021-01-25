@@ -169,10 +169,10 @@ describe PalabrasController do
     let(:params) do
        { id: palabra.id }
     end
-    let!(:palabra) { create(:palabra) }
+    let!(:palabra) { create(:palabra, user: user ) }
+    let(:user) { create(:user) }
 
     context 'when user is signed in' do
-      let(:user) { create(:user) }
       before do
         sign_in(user)
         subject
@@ -201,12 +201,12 @@ describe PalabrasController do
 
   describe 'PUT update' do
     subject { put :update, params: params }
-    let!(:palabra) { create(:palabra, content: 'despacito', language: language_1) }
+    let!(:palabra) { create(:palabra, user: user, content: 'despacito', language: language_1) }
     let!(:language_1) { create(:language, name: 'English') }
     let!(:language_2) { create(:language, name: 'Polish') }
+    let(:user) { create(:user) }
 
     context 'when user is signed in' do
-      let(:user) { create(:user) }
       before do
         sign_in(user)
       end
@@ -263,10 +263,10 @@ describe PalabrasController do
 
   describe 'DELETE destroy' do
     subject { delete :destroy, params: params }
-    let!(:palabra) { create(:palabra) }
+    let!(:palabra) { create(:palabra, user: user) }
+    let(:user) { create(:user) }
 
     context 'when user is signed in' do
-      let(:user) { create(:user) }
       before do
         sign_in(user)
       end

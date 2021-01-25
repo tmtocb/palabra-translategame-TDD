@@ -24,9 +24,11 @@ class PalabrasController < ApplicationController
   end
 
   def edit
+    authorize @palabra
   end
 
   def update
+    authorize @palabra
     if @palabra.update(palabra_params)
       redirect_to(palabra_path(@palabra))
     else
@@ -35,6 +37,7 @@ class PalabrasController < ApplicationController
   end
 
   def destroy
+    authorize @palabra
     @palabra.destroy
     redirect_to(palabras_path)
   end
