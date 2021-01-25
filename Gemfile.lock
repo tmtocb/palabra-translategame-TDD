@@ -66,6 +66,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
+    bootstrap4-kaminari-views (1.0.1)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     builder (3.2.4)
     bullet (6.1.2)
       activesupport (>= 3.0.0)
@@ -111,6 +114,18 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.0)
       activesupport (>= 5.0.0)
+    kaminari (1.2.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
+      actionview
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
+      activerecord
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     language_list (1.2.1)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -272,6 +287,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap (>= 1.4.2)
+  bootstrap4-kaminari-views
   bullet
   devise
   factory_bot_rails
@@ -279,6 +295,7 @@ DEPENDENCIES
   guard
   guard-rspec
   jbuilder (~> 2.7)
+  kaminari
   language_list (~> 1.1)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
