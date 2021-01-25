@@ -35,6 +35,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'brakeman'
   gem 'bullet'
+  gem 'bundler-audit'
   gem 'listen', '~> 3.2'
   gem 'pry-rails'
   gem 'spring'
