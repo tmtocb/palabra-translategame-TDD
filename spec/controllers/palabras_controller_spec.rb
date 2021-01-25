@@ -16,7 +16,7 @@ describe PalabrasController do
         expect(response).to render_template(:index)
       end
 
-      it 'expect success http response' do
+      it do
         expect(response).to have_http_status(:success)
       end
     end
@@ -30,63 +30,129 @@ describe PalabrasController do
         expect(response).to render_template(:index)
       end
 
-      it 'expect success http response' do
+      it do
         expect(response).to have_http_status(:success)
       end
     end
   end
 
   describe 'GET new' do
-    before { get :new }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
+        get :new
+      end
 
-    it 'assigns @palabra' do
-      expect(assigns(:palabra)).to be_a_new(Palabra)
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to be_a_new(Palabra)
+      end
+
+      it 'renders the new template' do
+        expect(response).to render_template(:new)
+      end
+
+      it do
+        expect(response).to have_http_status(200)
+      end
     end
 
-    it 'renders the new template' do
-      expect(response).to render_template(:new)
-    end
+    context 'when user is NOT signed in' do
 
-    it 'expect success http response' do
-      expect(response).to have_http_status(:success)
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to eq(nil)
+      end
+
+      it 'renders the new template' do
+        expect(response).not_to render_template(:new)
+      end
+
+      it do
+        expect(response).to have_http_status(200)
+      end
     end
   end
 
   describe 'POST create' do
-    let!(:language) { create(:language) }
-    subject { post :create, params: params }
+    context 'when user is signed in' do
+      let!(:language) { create(:language) }
+      subject { post :create, params: params }
+      let(:user) { create(:user) }
+      before { sign_in(user) }
 
-    context 'valid params' do
+      context 'valid params' do
 
-      let (:params) do
-        { palabra: { content: 'despacito', language_id: language.id } }
+        let (:params) do
+          { palabra: { content: 'despacito', language_id: language.id } }
+        end
+
+        it 'creates new palabra' do
+          expect { subject }.to change(Palabra, :count).from(0).to(1)
+        end
+
+        it do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
 
-      it 'creates new palabra' do
-        expect { subject }.to change(Palabra, :count).from(0).to(1)
+      context 'invalid params' do
+
+        let (:params) do
+          { palabra: { content: '' } }
+        end
+
+        it 'does not create new palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+          expect(response).to render_template(:new)
+        end
       end
     end
 
-    context 'invalid params' do
+    context 'when user is NOT signed in' do
+      let!(:language) { create(:language) }
+      subject { post :create, params: params }
 
-      let (:params) do
-        { palabra: { content: '' } }
+      context 'valid params' do
+
+        let (:params) do
+          { palabra: { content: 'despacito', language_id: language.id } }
+        end
+
+        it 'does not create new palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+        end
+
+        it do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
 
-      it 'does not create new word' do
-        expect { subject }.not_to change(Palabra, :count)
-        expect(response).to render_template(:new)
+      context 'invalid params' do
+
+        let (:params) do
+          { palabra: { content: '' } }
+        end
+
+        it 'does not create new palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+          expect(response).not_to render_template(:new)
+        end
+
+        it do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
     end
   end
 
   describe 'GET show' do
     before { get :show, params: params }
-
     let(:params) do
        { id: palabra.id }
     end
-
     let!(:palabra) { create(:palabra) }
 
     it 'assigns @palabra' do
@@ -99,20 +165,37 @@ describe PalabrasController do
   end
 
   describe 'GET edit' do
-    before { get :edit, params: params }
-
+    subject { get :edit, params: params }
     let(:params) do
        { id: palabra.id }
     end
-
     let!(:palabra) { create(:palabra) }
 
-    it 'assigns @palabra' do
-      expect(assigns(:palabra)).to eq(palabra)
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
+        subject
+      end
+
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to eq(palabra)
+      end
+
+      it 'renders the edit template' do
+        expect(response).to render_template(:edit)
+      end
     end
 
-    it 'renders the edit template' do
-      expect(response).to render_template(:edit)
+    context 'when user is NOT signed in' do
+      it 'does not assign @palabra' do
+        expect(assigns(:palabra)).to eq(nil)
+      end
+
+      it do
+        subject
+        expect(response).to have_http_status(302)
+      end
     end
   end
 
@@ -122,29 +205,58 @@ describe PalabrasController do
     let!(:language_1) { create(:language, name: 'English') }
     let!(:language_2) { create(:language, name: 'Polish') }
 
-    context 'valid params' do
-      let(:params) do 
-      { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
       end
 
-      it 'updates palabra' do
-        expect { subject } 
-        .to change { palabra.reload.content }
-        .from('despacito')
-        .to('bailando')
-        .and change { palabra.reload.language }
-        .from(language_1)
-        .to(language_2)
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+        end
+
+        it 'updates palabra' do
+          expect { subject }
+            .to change { palabra.reload.content }
+            .from('despacito')
+            .to('bailando')
+            .and change { palabra.reload.language }
+            .from(language_1)
+            .to(language_2)
+        end
+      end
+
+      context 'invalid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: '' } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
     end
       
-    context 'invalid params' do
-      let(:params) do 
-      { id: palabra.id, palabra: { content: '' } }
+    context 'when user is NOT signed in' do
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: 'bailando', language_id: language_2.id } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
 
-      it 'does not update palabra' do
-        expect { subject }.not_to change { palabra.reload.content }
+      context 'invalid params' do
+        let(:params) do
+          { id: palabra.id, palabra: { content: '' } }
+        end
+
+        it 'does not update palabra' do
+          expect { subject }.not_to change { palabra.reload.content }
+        end
       end
     end
   end
@@ -153,13 +265,32 @@ describe PalabrasController do
     subject { delete :destroy, params: params }
     let!(:palabra) { create(:palabra) }
 
-    context 'valid params' do
-      let (:params) do
-      { id: palabra.id }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
       end
 
-      it 'deletes palabra' do
-        expect { subject}.to change(Palabra, :count).from(1).to(0)
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id }
+        end
+
+        it 'deletes palabra' do
+          expect { subject }.to change(Palabra, :count).from(1).to(0)
+        end
+      end
+    end
+
+    context 'when user is NOT signed in' do
+      context 'valid params' do
+        let(:params) do
+          { id: palabra.id }
+        end
+
+        it 'does not delete palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+        end
       end
     end
   end

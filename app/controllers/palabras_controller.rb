@@ -1,5 +1,6 @@
 class PalabrasController < ApplicationController
   before_action :set_palabra, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
 
   def index
     @palabras = Palabra.all
@@ -11,6 +12,7 @@ class PalabrasController < ApplicationController
 
   def create
     @palabra = Palabra.new(palabra_params)
+    @palabra.user = current_user
     if @palabra.save
       redirect_to(palabras_path)
     else
