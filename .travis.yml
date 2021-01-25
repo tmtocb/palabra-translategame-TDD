@@ -12,5 +12,9 @@ before_script:
   - yarn
   - bundle exec rake db:create
   - bundle exec rake db:schema:load
+  - gem install bundle-audit
+  - bundle-audit update
 script:
   - bundle exec rake spec 
+  - bundle exec brakeman -z
+  - bundle-audit
