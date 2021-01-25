@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Palabra < ApplicationRecord
   validates :content, :language, presence: true
   belongs_to :language

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PalabrasController < ApplicationController
   before_action :set_palabra, only: %i[show edit update destroy]
   before_action :authenticate_user!, only: %i[new create edit update destroy]
@@ -20,8 +22,7 @@ class PalabrasController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def edit
     authorize @palabra
@@ -42,7 +43,6 @@ class PalabrasController < ApplicationController
     redirect_to(palabras_path)
   end
 
-    
   private
 
   def palabra_params

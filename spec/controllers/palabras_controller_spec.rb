@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe PalabrasController do 
-
+describe PalabrasController do
   describe 'GET index' do
     before { get :index }
 
@@ -58,7 +59,6 @@ describe PalabrasController do
     end
 
     context 'when user is NOT signed in' do
-
       it 'assigns @palabra' do
         expect(assigns(:palabra)).to eq(nil)
       end
@@ -81,8 +81,7 @@ describe PalabrasController do
       before { sign_in(user) }
 
       context 'valid params' do
-
-        let (:params) do
+        let(:params) do
           { palabra: { content: 'despacito', language_id: language.id } }
         end
 
@@ -97,8 +96,7 @@ describe PalabrasController do
       end
 
       context 'invalid params' do
-
-        let (:params) do
+        let(:params) do
           { palabra: { content: '' } }
         end
 
@@ -114,8 +112,7 @@ describe PalabrasController do
       subject { post :create, params: params }
 
       context 'valid params' do
-
-        let (:params) do
+        let(:params) do
           { palabra: { content: 'despacito', language_id: language.id } }
         end
 
@@ -130,8 +127,7 @@ describe PalabrasController do
       end
 
       context 'invalid params' do
-
-        let (:params) do
+        let(:params) do
           { palabra: { content: '' } }
         end
 
@@ -151,7 +147,7 @@ describe PalabrasController do
   describe 'GET show' do
     before { get :show, params: params }
     let(:params) do
-       { id: palabra.id }
+      { id: palabra.id }
     end
     let!(:palabra) { create(:palabra) }
 
@@ -167,9 +163,9 @@ describe PalabrasController do
   describe 'GET edit' do
     subject { get :edit, params: params }
     let(:params) do
-       { id: palabra.id }
+      { id: palabra.id }
     end
-    let!(:palabra) { create(:palabra, user: user ) }
+    let!(:palabra) { create(:palabra, user: user) }
     let(:user) { create(:user) }
 
     context 'when user is signed in' do
@@ -237,7 +233,7 @@ describe PalabrasController do
         end
       end
     end
-      
+
     context 'when user is NOT signed in' do
       context 'valid params' do
         let(:params) do

@@ -1,15 +1,17 @@
-user_1 = User.create(email: 'user_1@test.com', password: 'password', password_confirmation: 'password' )
-user_2 = User.create(email: 'user_2@test.com', password: 'password', password_confirmation: 'password' )
+# frozen_string_literal: true
 
-language_1 = Language.create(name: 'English')
-language_2 = Language.create(name: 'Polish')
+user1 = User.create(email: 'user_1@test.com', password: 'password', password_confirmation: 'password')
+user2 = User.create(email: 'user_2@test.com', password: 'password', password_confirmation: 'password')
+
+language1 = Language.create(name: 'English')
+language2 = Language.create(name: 'Polish')
 
 5.times do
-  Palabra.create(content: Faker::Lorem.word, language: language_1, user: user_1)
-  Palabra.create(content: Faker::Lorem.word, language: language_2, user: user_1)
+  Palabra.create(content: Faker::Lorem.word, language: language1, user: user1)
+  Palabra.create(content: Faker::Lorem.word, language: language2, user: user1)
 end
 
 5.times do
-  Palabra.create(content: Faker::Lorem.word, language: language_1, user: user_2)
-  Palabra.create(content: Faker::Lorem.word, language: language_2, user: user_2)
+  Palabra.create(content: Faker::Lorem.word, language: language1, user: user2)
+  Palabra.create(content: Faker::Lorem.word, language: language2, user: user2)
 end
