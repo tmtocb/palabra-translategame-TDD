@@ -37,45 +37,113 @@ describe PalabrasController do
   end
 
   describe 'GET new' do
-    before { get :new }
+    context 'when user is signed in' do
+      let(:user) { create(:user) }
+      before do
+        sign_in(user)
+        get :new
+      end
 
-    it 'assigns @palabra' do
-      expect(assigns(:palabra)).to be_a_new(Palabra)
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to be_a_new(Palabra)
+      end
+
+      it 'renders the new template' do
+        expect(response).to render_template(:new)
+      end
+
+      it 'expect success http response' do
+        expect(response).to have_http_status(200)
+      end
     end
 
-    it 'renders the new template' do
-      expect(response).to render_template(:new)
-    end
+    context 'when user is NOT signed in' do
 
-    it 'expect success http response' do
-      expect(response).to have_http_status(:success)
+      it 'assigns @palabra' do
+        expect(assigns(:palabra)).to eq(nil)
+      end
+
+      it 'renders the new template' do
+        expect(response).not_to render_template(:new)
+      end
+
+      it 'expect http response' do
+        expect(response).to have_http_status(200)
+      end
     end
   end
 
   describe 'POST create' do
-    let!(:language) { create(:language) }
-    subject { post :create, params: params }
+    context 'when user is signed in' do
+      let!(:language) { create(:language) }
+      subject { post :create, params: params }
+      let(:user) { create(:user) }
+      before { sign_in(user) }
 
-    context 'valid params' do
+      context 'valid params' do
 
-      let (:params) do
-        { palabra: { content: 'despacito', language_id: language.id } }
+        let (:params) do
+          { palabra: { content: 'despacito', language_id: language.id } }
+        end
+
+        it 'creates new palabra' do
+          expect { subject }.to change(Palabra, :count).from(0).to(1)
+        end
+
+        it 'expect 302 http response' do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
 
-      it 'creates new palabra' do
-        expect { subject }.to change(Palabra, :count).from(0).to(1)
+      context 'invalid params' do
+
+        let (:params) do
+          { palabra: { content: '' } }
+        end
+
+        it 'does not create new word' do
+          expect { subject }.not_to change(Palabra, :count)
+          expect(response).to render_template(:new)
+        end
       end
     end
 
-    context 'invalid params' do
+    context 'when user is NOT signed in' do
+      let!(:language) { create(:language) }
+      subject { post :create, params: params }
 
-      let (:params) do
-        { palabra: { content: '' } }
+      context 'valid params' do
+
+        let (:params) do
+          { palabra: { content: 'despacito', language_id: language.id } }
+        end
+
+        it 'does not create new palabra' do
+          expect { subject }.not_to change(Palabra, :count)
+        end
+
+        it 'expect 302 http response' do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
 
-      it 'does not create new word' do
-        expect { subject }.not_to change(Palabra, :count)
-        expect(response).to render_template(:new)
+      context 'invalid params' do
+
+        let (:params) do
+          { palabra: { content: '' } }
+        end
+
+        it 'does not create new word' do
+          expect { subject }.not_to change(Palabra, :count)
+          expect(response).not_to render_template(:new)
+        end
+
+        it 'expect 302 http response' do
+          subject
+          expect(response).to have_http_status(302)
+        end
       end
     end
   end
