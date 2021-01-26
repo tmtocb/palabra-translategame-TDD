@@ -13,4 +13,13 @@ class Palabra < ApplicationRecord
   paginates_per 15
 
   accepts_nested_attributes_for :translations, allow_destroy: true
+  validate :translations_cannot_be_in_the_same_language_as_word
+
+  private
+
+  def translations_cannot_be_in_the_same_language_as_word
+    return if translations.none? { |translation| translation.language == language }
+      errors.add(:language, 'must be different than language of translations.')
+  end
+  
 end
