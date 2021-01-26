@@ -11,6 +11,9 @@ require("channels")
 import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap'
 require("stylesheets/application.scss") 
+require('./nested-forms/addFields')
+require('./nested-forms/removeFields')
+//= require jquery_nested_form
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.

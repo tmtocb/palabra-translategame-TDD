@@ -15,6 +15,9 @@ class PalabrasController < ApplicationController
   def create
     @palabra = Palabra.new(palabra_params)
     @palabra.user = current_user
+    @palabra.translations.each do |translation|
+      translation.user = current_user
+    end
     if @palabra.save
       redirect_to(palabras_path)
     else
@@ -46,7 +49,7 @@ class PalabrasController < ApplicationController
   private
 
   def palabra_params
-    params.require(:palabra).permit(:content, :language_id)
+    params.require(:palabra).permit(:content, :language_id, translations_attributes: [:id, :content, :language_id, :_destroy])
   end
 
   def set_palabra

@@ -74,15 +74,17 @@ describe PalabrasController do
   end
 
   describe 'POST create' do
+    subject { post :create, params: params }
+
     context 'when user is signed in' do
-      let!(:language) { create(:language) }
-      subject { post :create, params: params }
       let(:user) { create(:user) }
+
       before { sign_in(user) }
 
       context 'valid params' do
+        let!(:language_1) { create(:language) }
         let(:params) do
-          { palabra: { content: 'despacito', language_id: language.id } }
+          { palabra: { content: 'despacito', language_id: language_1.id } }
         end
 
         it 'creates new palabra' do
@@ -93,6 +95,37 @@ describe PalabrasController do
           subject
           expect(response).to have_http_status(302)
         end
+
+        context 'when some translation is present' do
+          let!(:language_2) { create(:language, :polish) }
+          let(:params) do
+            {
+              palabra:
+                {
+                  content: 'despacito',
+                  language_id: language_1.id,
+                  translations_attributes:
+                    {
+                      '1541932687026' =>
+                        {
+                          content: 'bailando',
+                          language_id: language_2.id,
+                          _destroy: false
+                        }
+                    }
+                }
+            }
+          end
+
+          it 'creates two words' do
+            expect { subject }.to change(Palabra, :count).from(0).to(2)
+          end
+
+          it 'creates translation for first palabra' do
+            subject
+            expect(Palabra.first.reload.translations.count).to eq(1)
+          end
+        end
       end
 
       context 'invalid params' do
@@ -102,16 +135,18 @@ describe PalabrasController do
 
         it 'does not create new palabra' do
           expect { subject }.not_to change(Palabra, :count)
-          expect(response).to render_template(:new)
+        end
+
+        it do
+          subject
+          expect(response).to have_http_status(200)
         end
       end
     end
 
     context 'when user is NOT signed in' do
-      let!(:language) { create(:language) }
-      subject { post :create, params: params }
-
       context 'valid params' do
+        let!(:language) { create(:language) }
         let(:params) do
           { palabra: { content: 'despacito', language_id: language.id } }
         end
@@ -131,9 +166,8 @@ describe PalabrasController do
           { palabra: { content: '' } }
         end
 
-        it 'does not create new palabra' do
+        it 'does not create new word' do
           expect { subject }.not_to change(Palabra, :count)
-          expect(response).not_to render_template(:new)
         end
 
         it do

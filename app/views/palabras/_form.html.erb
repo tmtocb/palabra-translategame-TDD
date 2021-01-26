@@ -1,5 +1,11 @@
-<%= simple_form_for @palabra do |f| %>
+<%= simple_nested_form_for @palabra do |f| %>
   <%= f.input :content %>
   <%= f.association :language %>
+  <fieldset>
+    <%= f.fields_for :translations do |t| %>            
+      <%= render "translation_fields", f: t %>        
+    <% end %>     
+    <%= link_to_add_fields "Add translations", f, :translations %>    
+  </fieldset>
   <%= f.button :submit, class: 'btn btn-primary' %>
 <% end %>
