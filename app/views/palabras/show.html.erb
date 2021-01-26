@@ -3,7 +3,7 @@
 <h5><%= @palabra.language.name %></h5><br>
 
 <h4>added by:</h4>
-<h5><%= @palabra.user&.email %><h5><br>
+<h5><%= @palabra.user.secret_email %></h5><br>
 
 <% if @palabra.translations.any? %>
   <h4>Translations:</h4>
