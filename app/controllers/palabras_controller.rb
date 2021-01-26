@@ -10,6 +10,7 @@ class PalabrasController < ApplicationController
 
   def new
     @palabra = Palabra.new
+    @palabra.translations.new
   end
 
   def create
