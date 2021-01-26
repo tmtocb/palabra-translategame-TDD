@@ -1,8 +1,11 @@
-<h1>Palabra</h1>
-<p><%= @palabra.content %></p>
-<p><%= @palabra.language.name %></p>
-<p><%= @palabra.user&.email %></p>
+<h2><%= @palabra.content %></h2>
+<h4>Language:</h4>
+<h5><%= @palabra.language.name %></h5><br>
+
+<h4>added by:</h4>
+<h5><%= @palabra.user&.email %><h5><br>
+
 <% if @palabra.translations.any? %>
-  <h3>Translations:</h3>
-  <p><%= @palabra.translations.pluck(:content).join(', ') %></p>
+  <h4>Translations:</h4>
+  <h5><%= @palabra.translations.pluck(:content).join(', ') %></h5>
 <% end %>
