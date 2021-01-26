@@ -2,3 +2,7 @@
 <p><%= @palabra.content %></p>
 <p><%= @palabra.language.name %></p>
 <p><%= @palabra.user&.email %></p>
+<% if @palabra.translations.any? %>
+  <h3>Translations:</h3>
+  <p><%= @palabra.translations.pluck(:content).join(', ') %></p>
+<% end %>
