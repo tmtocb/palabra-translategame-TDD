@@ -15,9 +15,7 @@ class PalabrasController < ApplicationController
   def create
     @palabra = Palabra.new(palabra_params)
     @palabra.user = current_user
-    @palabra.translations.each do |translation|
-      translation.user = current_user
-    end
+    set_user_for_translations(@palabra)
     if @palabra.save
       redirect_to(palabras_path)
     else
@@ -33,7 +31,9 @@ class PalabrasController < ApplicationController
 
   def update
     authorize @palabra
-    if @palabra.update(palabra_params)
+    @palabra.assign_attributes(palabra_params)
+    set_user_for_translations(@palabra)
+    if @palabra.save
       redirect_to(palabra_path(@palabra))
     else
       render :edit
@@ -54,5 +54,11 @@ class PalabrasController < ApplicationController
 
   def set_palabra
     @palabra = Palabra.find(params[:id])
+  end
+
+  def set_user_for_translations(palabra)
+    palabra.translations.each do |translation|
+      translation.user = current_user
+    end
   end
 end
