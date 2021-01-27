@@ -1,5 +1,8 @@
-    <h2 class="mt-3">All Palabras: </h2>
-    <div class="pagin">
+  <h2 class="mt-3">All Palabras </h2>
+    <div class="row">
+  <div class="col-md-9">
+  </div>
+  <div class="col-md-3">
       <%= paginate @palabras, theme: 'twitter-bootstrap-4', class: 'styyle' %>
    </div>
  <table class="table table-blue">
@@ -28,6 +31,3 @@
   </tr>
   <% end %>
 </table>
-<%= paginate @palabras, theme: 'twitter-bootstrap-4' %>
-</div>
-

@@ -1,33 +1,31 @@
-<div class="container">
-  <div class="jumbotron text-center">
-   <h2 class="display-4"><%= @palabra.content %></h2>
-      <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-6 mt-2">
-          <%= simple_form_for :answer, url: answers_path, method: :post do |f| %>
-            <%= f.input :content, as: :string, label: false, input_html: { autocomplete: 'off', autofocus: true } %>
-            <%= f.input :palabra_id, as: :hidden, input_html: { value: @palabra.id } %>
-            <%= f.input :game_id, as: :hidden, input_html: { value: @game.id } %>
-            <%= f.submit 'Check Answer', class: 'btn btn-check' %>
-          <% end %>
-          <p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th><h5>Good</h5></th>
-                  <th><h5>Bad</h5></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="table-good"><h5><%= @game.good_answers_count %></h5></td>
-                  <td class="table-bad"><h5><%= @game.bad_answers_count %></h5></td>
-                </tr>
-              </tbody>
-            </table>
-          </p>
-        </div>
+<div class="jumbotron text-center">
+ <h2 class="display-4"><%= @palabra.content %></h2>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6 mt-2">
+        <%= simple_form_for :answer, url: answers_path, method: :post do |f| %>
+          <%= f.input :content, as: :string, label: false, input_html: { autocomplete: 'off', autofocus: true } %>
+          <%= f.input :palabra_id, as: :hidden, input_html: { value: @palabra.id } %>
+          <%= f.input :game_id, as: :hidden, input_html: { value: @game.id } %>
+          <%= f.submit 'Check Answer', class: 'btn btn-check' %>
+        <% end %>
+        <p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><h5>Good</h5></th>
+                <th><h5>Bad</h5></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-good"><h5><%= @game.good_answers_count %></h5></td>
+                <td class="table-bad"><h5><%= @game.bad_answers_count %></h5></td>
+              </tr>
+            </tbody>
+          </table>
+        </p>
       </div>
     </div>
   </div>
