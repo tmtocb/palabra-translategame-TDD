@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create]
 
   def create
+    authorize(game, :access?)
     checker = Palabras::CheckAnswer.new(palabra, game, answer)
     checker.call
     redirect_back(fallback_location: root_path, notice: checker.message)
