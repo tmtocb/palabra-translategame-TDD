@@ -9,20 +9,23 @@
   <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">  
     <div class="navbar-nav ml-auto">
       <% if user_signed_in? %>
-          <%= link_to new_palabra_path, class: "nav-item nav-link active" do %>
+          <%= link_to games_path, method: :post, class: "nav-item nav-link" do %>
+            <i class="fas fa-gamepad"></i><span>Start Game</span>
+          <% end %>
+          <%= link_to new_palabra_path, class: "nav-item nav-link" do %>
             <i class="fa fa-plus-square"></i><span>New Palabra</span>
           <% end %>
-          <%= link_to edit_user_registration_path, class: "nav-item nav-link active" do %>
+          <%= link_to edit_user_registration_path, class: "nav-item nav-link" do %>
            <i class="fa fa-user-edit"></i><span>Edit Profile</span></a>
           <% end %>
-          <%= link_to destroy_user_session_path, method: :delete, class: "nav-item nav-link active" do %>
+          <%= link_to destroy_user_session_path, method: :delete, class: "nav-item nav-link" do %>
            <i class="fa fa-sign-out-alt"></i><span>Log Out</span></a>
           <% end %>
       <% else %>
-        <%= link_to new_user_session_path, class: "nav-item nav-link active" do %>
+        <%= link_to new_user_session_path, class: "nav-item nav-link" do %>
           <i class="fa fa-american-sign-language-interpreting"></i><span>Login</span>
         <% end %>
-        <%= link_to new_user_registration_path, class: "nav-item nav-link active" do %>
+        <%= link_to new_user_registration_path, class: "nav-item nav-link" do %>
           <i class="fa fa-user-plus"></i><span>Sign Up</span>
         <% end %>
       <% end %>
