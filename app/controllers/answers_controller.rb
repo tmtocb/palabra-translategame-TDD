@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create]
 
@@ -10,7 +8,7 @@ class AnswersController < ApplicationController
 
   private
 
-  def word
+  def palabra
     Palabra.find(params[:answer][:palabra_id])
   end
 
@@ -19,7 +17,7 @@ class AnswersController < ApplicationController
   end
 
   def game
-    Game.find(params[:answer][:palabra_id])
+    Game.find(params[:answer][:game_id])
   end
 
   def message(checker)

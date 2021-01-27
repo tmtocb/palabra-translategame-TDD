@@ -6,3 +6,10 @@
 <h5><%= @game.bad_answers_count %></h5><br>
 
 <p><%= @palabra.content %></p>
+
+<%= simple_form_for :answer, url: answers_path, method: :post do |f| %>
+  <%= f.input :content, as: :string %>
+  <%= f.input :palabra_id, as: :hidden, input_html: { value: @palabra.id } %>
+  <%= f.input :game_id, as: :hidden, input_html: { value: @game.id } %>
+  <%= f.submit 'Check Answer' %>
+<% end %>
