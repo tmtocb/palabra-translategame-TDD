@@ -43,8 +43,14 @@ RSpec.describe GamesController, type: :controller do
         { id: game.id }
       end
       let!(:game) { create(:game, user: user) }
+      let!(:palabra) { create(:palabra) }
 
       it 'assigns @game' do
+        subject
+        expect(assigns(:game)).to eq(game)
+      end
+
+      it 'assigns @palabra' do
         subject
         expect(assigns(:game)).to eq(game)
       end
@@ -60,10 +66,16 @@ RSpec.describe GamesController, type: :controller do
         { id: game.id }
       end
       let!(:game) { create(:game) }
+      let!(:palabra) { create(:palabra) }
 
       it 'does not assign @game' do
         subject
         expect(assigns(:game)).not_to eq(game)
+      end
+
+      it 'does not assign @palabra' do
+        subject
+        expect(assigns(:palabra)).not_to eq(palabra)
       end
 
       it 'does not render the show template' do
