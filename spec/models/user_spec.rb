@@ -10,6 +10,7 @@ RSpec.describe User, type: :model do
 
   describe '#associations' do
     it { is_expected.to have_many(:palabras) }
+    it { is_expected.to have_many(:games) }
   end
 
   describe '.secret_email' do

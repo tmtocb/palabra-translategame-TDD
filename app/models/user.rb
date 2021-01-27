@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :palabras
+  has_many :games
 
   def secret_email
     email.gsub(/.{0,3}@/, '###@')
