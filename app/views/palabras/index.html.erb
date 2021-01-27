@@ -2,13 +2,13 @@
     <div class="pagin">
       <%= paginate @palabras, theme: 'twitter-bootstrap-4', class: 'styyle' %>
    </div>
- <table class="table table-dark">
+ <table class="table table-blue">
   <tr>
-    <th>Content</th>
+    <th>Palabra</th>
     <th>Language</th>
-    <th>Author</th>
+    <th>By:</th>
     <th>Translations</th>
-    <th>Links</th>
+    <th>Actions</th>
   </tr>
   <% @palabras.each do |palabra| %>
   <tr>
@@ -19,10 +19,10 @@
     <td><%= link_to palabra_path(palabra) do %>
       <i class="far fa-eye"></i>
     <% end %>
-    <td><%= link_to edit_palabra_path(palabra) do %>
+    <%= link_to edit_palabra_path(palabra) do %>
       <i class="fas fa-highlighter"></i>
     <% end %>
-    <td><%= link_to palabra_path(palabra), method: :delete, data: { confirm: 'Are you sure?' } do %>
+    <%= link_to palabra_path(palabra), method: :delete, data: { confirm: 'Are you sure?' } do %>
       <i class="far fa-minus-square"></i>
     <% end %></td>
   </tr>
