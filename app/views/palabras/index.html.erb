@@ -14,7 +14,7 @@
   <tr>
     <td><%= palabra.content %></td>
     <td><%= palabra.language.name %></td>
-    <td><%= palabra.user&.email %></td>
+    <td><%= palabra.user.secret_email %></td>
     <td><%= palabra.translations.size %></td>
     <td><%= link_to palabra_path(palabra) do %>
       <i class="far fa-eye"></i>

@@ -1,0 +1,41 @@
+<h2 class="mt-2"><%= t('.title', resource: resource_name.to_s.humanize) %></h2>
+
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= bootstrap_devise_error_messages! %>
+
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
+
+        <p class="form-text orange-small"><%= t('.leave_blank_if_you_don_t_want_to_change_it') %></p>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :current_password %>
+        <%= f.password_field :current_password, autocomplete: 'current-password', class: 'form-control' %>
+
+        <p class="form-text orange-small"><%= t('.we_need_your_current_password_to_confirm_your_changes') %></p>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit t('.update'), class: 'btn btn-addtranslation' %>
+        <%= link_to t('.back'), :back, class: 'btn btn-addtranslation' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
