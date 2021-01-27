@@ -1,1 +1,6 @@
-<h2 class="mt-2">Game</h2>
+<h2 class="mt-2">Game <%= "\##{@game.id}" %></h2>
+<h4>Good Answers:</h4>
+<h5><%= @game.good_answers_count %></h5><br>
+
+<h4>Bad Answers:</h4>
+<h5><%= @game.bad_answers_count %></h5><br>
