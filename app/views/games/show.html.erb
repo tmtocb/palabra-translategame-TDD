@@ -1,15 +1,34 @@
-<h2 class="mt-2">Game <%= "\##{@game.id}" %></h2>
-<h4>Good Answers:</h4>
-<h5><%= @game.good_answers_count %></h5><br>
-
-<h4>Bad Answers:</h4>
-<h5><%= @game.bad_answers_count %></h5><br>
-
-<p><%= @palabra.content %></p>
-
-<%= simple_form_for :answer, url: answers_path, method: :post do |f| %>
-  <%= f.input :content, as: :string %>
-  <%= f.input :palabra_id, as: :hidden, input_html: { value: @palabra.id } %>
-  <%= f.input :game_id, as: :hidden, input_html: { value: @game.id } %>
-  <%= f.submit 'Check Answer' %>
-<% end %>
+<div class="container">
+  <div class="jumbotron text-center">
+   <h2 class="display-4"><%= @palabra.content %></h2>
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6 mt-2">
+          <%= simple_form_for :answer, url: answers_path, method: :post do |f| %>
+            <%= f.input :content, as: :string, label: false, input_html: { autocomplete: 'off', autofocus: true } %>
+            <%= f.input :palabra_id, as: :hidden, input_html: { value: @palabra.id } %>
+            <%= f.input :game_id, as: :hidden, input_html: { value: @game.id } %>
+            <%= f.submit 'Check Answer' %>
+          <% end %>
+          <p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><h5>Good</h5></th>
+                  <th><h5>Bad</h5></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="table-success"><h5><%= @game.good_answers_count %></h5></td>
+                  <td class="table-danger"><h5><%= @game.bad_answers_count %></h5></td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
