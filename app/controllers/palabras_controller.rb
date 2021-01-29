@@ -5,7 +5,7 @@ class PalabrasController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
 
   def index
-    @palabras = Palabra.page(params[:page])
+    @palabras = Palabra.includes(:user, :language, :translations).page(params[:page])
   end
 
   def new
