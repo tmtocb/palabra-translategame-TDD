@@ -6,7 +6,7 @@ FactoryBot.define do
     language
     user
 
-    trait :with_translations do 
+    trait :with_translations do
       after(:create) do |palabra|
         palabra.translations << create_list(:palabra, 2)
       end

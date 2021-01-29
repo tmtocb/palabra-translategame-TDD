@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GamePolicy
   attr_reader :user, :game
 

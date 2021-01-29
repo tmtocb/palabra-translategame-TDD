@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Palabras
   class CheckAnswer
     def initialize(palabra, game, answer)
@@ -13,6 +15,7 @@ module Palabras
 
     def message
       return I18n.t('check_answer.good_answer') if good_answer?
+
       I18n.t('check_answer.bad_answer')
     end
 
@@ -26,6 +29,7 @@ module Palabras
 
     def update_game_stats(success:)
       return game.increment!(:good_answers_count) if success == true
+
       game.increment!(:bad_answers_count)
     end
   end
