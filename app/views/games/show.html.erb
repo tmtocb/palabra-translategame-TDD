@@ -14,14 +14,16 @@
           <table class="table">
             <thead>
               <tr>
-                <th><h5>Good</h5></th>
-                <th><h5>Bad</h5></th>
+                <th class="table-good"><h5>Good</h5></th>
+                <th class="table-bad"><h5>Bad</h5></th>
+                <th class="table-progress"><h5>Correct%</h5></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="table-good"><h5><%= @game.good_answers_count %></h5></td>
                 <td class="table-bad"><h5><%= @game.bad_answers_count %></h5></td>
+                <td class="table-progress"><h5><%= @game.correctness %></h5></td>
               </tr>
             </tbody>
           </table>
